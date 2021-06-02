@@ -1,0 +1,99 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+{%if userdata.profile_pic%}
+<div class="container" style='padding-top: 125px;padding-left: 30%;'>
+<img src="{{userdata.profile_pic.url}}" alt="..." class="rounded-circle" style='width:200px;height:200px;'>
+</div>
+<br>
+{%if task%}
+<div class='container'>
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Task No.</th>
+            <th>Description</th>
+            <th>Assign Date</th>
+            <th>Comments</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%for i in task%}
+          <tr>          
+            <td>{{i.task_no}}</td>
+            <td>{{i.task_details}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.remarks}}</td>
+            {%if i.status%}
+            <td>Completed</td>
+            {%else%}
+            <td><a href="{% url 'completed' i.task_no %}">pending</a></td>
+            {%endif%}
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+      <div class='container btn-group btn-group-lg'>
+      <a href='{% url "add_task"%}' class="btn btn-primary" >Add Task</a>
+      <a href='{% url "deletecompleted"%}' class="btn btn-primary" role='button'>Delete Completed Tasks</a>
+      <a href='{% url "delete_all"%}' class=" btn btn-primary" role='button'>Delete All</a>
+      <a href='{% url "update_user" userdata.slug %}' class="btn btn-primary" role='button'>Edit Profile Picture</a> 
+    </div>
+    <br><br>
+    <a href="{% url 'change_password' %}" class="container btn btn-primary btn-lg btn-block" >Update Password</a>
+</div>
+{%else%}
+<a href='{% url "add_task"%}' class="container btn btn-primary btn-lg btn-block" >Add Task</a>
+<a href='{% url "update_user" userdata.slug %}' class="container btn btn-primary btn-lg btn-block" role='button'>Edit Profile Picture</a>
+<a href="{% url 'change_password' %}" class="container btn btn-primary btn-lg btn-block" >Update Password</a>
+{%endif%}
+
+{%else%}
+<br>
+<br><br><br><br><br><br><br>
+{%if task%}
+<div class='container'>
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Task No.</th>
+            <th>Description</th>
+            <th>Assign Date</th>
+            <th>Comments</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%for i in task%}
+          <tr>
+              
+            <td>{{i.task_no}}</td>
+            <td>{{i.task_details}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.remarks}}</td>
+            {%if i.status%}
+            <td>Completed</td>
+            {%else%}
+            <td><a href="{% url 'completed' i.task_no %}">pending</a></td>
+            {%endif%}
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+      <div class='container btn-group btn-group-lg'>
+      <a href='{% url "add_task"%}' class="btn btn-primary" >Add Task</a>
+      <a href='{% url "deletecompleted"%}' class="btn btn-primary" role='button'>Delete Completed Tasks</a>
+      <a href='{% url "delete_all"%}' class=" btn btn-primary" role='button'>Delete All</a>
+      <a href='{% url "update_user" userdata.slug %}' class="btn btn-primary" role='button'>Edit Profile Picture</a> 
+    </div>
+    <a href="{% url 'change_password' %}" class="container btn btn-primary btn-lg btn-block" >Update Password</a>
+</div>
+{%else%}
+<a href='{% url "add_task"%}' class="container btn btn-primary btn-lg btn-block" >Add Task</a>
+<a href='{% url "update_user" userdata.slug %}' class="container btn btn-primary btn-lg btn-block" role='button'>Edit Profile Picture</a>
+<a href="{% url 'change_password' %}" class="container btn btn-primary btn-lg btn-block" >Update Password</a>
+{%endif%}
+{%endif%}
+
+{%endblock%}
